@@ -1,5 +1,7 @@
 package com.example.dialogfragmentdemo
 
+import android.content.Context
+import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
 
@@ -25,6 +28,13 @@ class DialogFragment : androidx.fragment.app.DialogFragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+
+    private lateinit var clickListener: ClickListener
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        clickListener = context as ClickListener
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,11 +54,34 @@ class DialogFragment : androidx.fragment.app.DialogFragment() {
         param1.also { view.findViewById<TextView>(R.id.titleText).text = it }
         param2.also { view.findViewById<TextView>(R.id.subtitleText).text = it }
 
-        view.findViewById<Button>(R.id.doneBtn).setOnClickListener{
-            Snackbar.make(it,"Do you want to",Snackbar.LENGTH_LONG).
-                setAction("Cancel",View.OnClickListener {
-                    Toast.makeText(requireContext(),"Cancelled",Toast.LENGTH_SHORT).show()
-                }).show()
+        view.findViewById<Button>(R.id.doneBtn).setOnClickListener {
+
+            val alertDialogBuilder:AlertDialog.Builder=AlertDialog.Builder(requireActivity())
+            alertDialogBuilder.setMessage("Are you sure, Yow wanted to make decision")
+            alertDialogBuilder.setPositiveButton("Yes",object :DialogInterface.OnClickListener{
+                override fun onClick(dialog: DialogInterface?, which: Int) {
+                    clickListener.onDoneClicked(param1!!,param2!!)
+                    this@DialogFragment.dismiss()
+                    dialog?.dismiss()
+                }
+
+            })
+            alertDialogBuilder.setNegativeButton("No"
+            ) { dialog, which ->
+                Toast.makeText(requireContext(), "Cancelled", Toast.LENGTH_SHORT).show()
+                dialog?.dismiss()
+            }
+            val alertDialog = alertDialogBuilder.create()
+            alertDialog.show();
+
+
+
+
+
+
+
+
+
         }
 
 
@@ -73,5 +106,9 @@ class DialogFragment : androidx.fragment.app.DialogFragment() {
                     putString(ARG_PARAM2, param2)
                 }
             }
+    }
+
+    interface ClickListener {
+        fun onDoneClicked(param1: String, param2: String)
     }
 }
