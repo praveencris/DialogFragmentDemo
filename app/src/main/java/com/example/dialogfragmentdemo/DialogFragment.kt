@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -43,9 +44,9 @@ class DialogFragment : androidx.fragment.app.DialogFragment() {
         param1.also { view.findViewById<TextView>(R.id.titleText).text = it }
         param2.also { view.findViewById<TextView>(R.id.subtitleText).text = it }
 
-        view.findViewById<TextView>(R.id.subtitleText).setOnClickListener{
+        view.findViewById<Button>(R.id.doneBtn).setOnClickListener{
             Snackbar.make(it,"Do you want to",Snackbar.LENGTH_LONG).
-                setAction("Hi",View.OnClickListener {
+                setAction("Cancel",View.OnClickListener {
                     Toast.makeText(requireContext(),"Cancelled",Toast.LENGTH_SHORT).show()
                 }).show()
         }
