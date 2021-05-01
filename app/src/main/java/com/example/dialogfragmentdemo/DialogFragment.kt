@@ -56,7 +56,7 @@ class DialogFragment : androidx.fragment.app.DialogFragment() {
 
         view.findViewById<Button>(R.id.doneBtn).setOnClickListener {
 
-            val alertDialogBuilder:AlertDialog.Builder=AlertDialog.Builder(requireActivity())
+            val alertDialogBuilder:AlertDialog.Builder=AlertDialog.Builder(requireContext())
             alertDialogBuilder.setMessage("Are you sure, Yow wanted to make decision")
             alertDialogBuilder.setPositiveButton("Yes",object :DialogInterface.OnClickListener{
                 override fun onClick(dialog: DialogInterface?, which: Int) {
