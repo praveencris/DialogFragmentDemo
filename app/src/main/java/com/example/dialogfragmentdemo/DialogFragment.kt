@@ -1,18 +1,10 @@
 package com.example.dialogfragmentdemo
 
+import android.app.Dialog
 import android.content.Context
-import android.content.DialogInterface
 import android.os.Bundle
-import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.Button
-import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
-import com.google.android.material.snackbar.Snackbar
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -44,51 +36,54 @@ class DialogFragment : androidx.fragment.app.DialogFragment() {
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        Log.d("DialogFragment", "$param1::$param2")
-        val view = inflater.inflate(R.layout.fragment_dialog, container, false)
-        param1.also { view.findViewById<TextView>(R.id.titleText).text = it }
-        param2.also { view.findViewById<TextView>(R.id.subtitleText).text = it }
+    /* override fun onCreateView(
+         inflater: LayoutInflater, container: ViewGroup?,
+         savedInstanceState: Bundle?
+     ): View? {
+         // Inflate the layout for this fragment
+         Log.d("DialogFragment", "$param1::$param2")
+         val view = inflater.inflate(R.layout.fragment_dialog, container, false)
+         param1.also { view.findViewById<TextView>(R.id.titleText).text = it }
+         param2.also { view.findViewById<TextView>(R.id.subtitleText).text = it }
 
-        view.findViewById<Button>(R.id.doneBtn).setOnClickListener {
+         view.findViewById<Button>(R.id.doneBtn).setOnClickListener {
 
-            val alertDialogBuilder:AlertDialog.Builder=AlertDialog.Builder(requireContext())
-            alertDialogBuilder.setMessage("Are you sure, Yow wanted to make decision")
-            alertDialogBuilder.setPositiveButton("Yes",object :DialogInterface.OnClickListener{
-                override fun onClick(dialog: DialogInterface?, which: Int) {
-                    clickListener.onDoneClicked(param1!!,param2!!)
-                    this@DialogFragment.dismiss()
-                    dialog?.dismiss()
-                }
-
-            })
-            alertDialogBuilder.setNegativeButton("No"
-            ) { dialog, which ->
-                Toast.makeText(requireContext(), "Cancelled", Toast.LENGTH_SHORT).show()
-                dialog?.dismiss()
-            }
-            val alertDialog = alertDialogBuilder.create()
-            alertDialog.show();
-
+             val alertDialogBuilder:AlertDialog.Builder=AlertDialog.Builder(requireContext())
+             alertDialogBuilder.setMessage("Are you sure, Yow wanted to make decision")
+             alertDialogBuilder.setPositiveButton("Yes"
+             ) { dialog, which ->
+                 clickListener.onDoneClicked(param1!!, param2!!)
+                 this@DialogFragment.dismiss()
+                 dialog?.dismiss()
+             }
+             alertDialogBuilder.setNegativeButton("No"
+             ) { dialog, which ->
+                 Toast.makeText(requireContext(), "Cancelled", Toast.LENGTH_SHORT).show()
+                 dialog?.dismiss()
+             }
+             val alertDialog = alertDialogBuilder.create()
+             alertDialog.show();
+         }
 
 
+         return view
+     }
+ */
 
-
-
-
-
-
-        }
-
-
-        return view
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        return AlertDialog.Builder(requireContext())
+            .setMessage("Are you sure, Yow wanted to make decision")
+            .setPositiveButton(
+                "OK"
+            ) { dialog, _ -> dialog.cancel() }
+            .setNegativeButton(
+                "Cancel"
+            ) { dialog, _ -> dialog.cancel() }.create()
     }
 
     companion object {
+        const val TAG = "DialogFragment"
+
         /**
          * Use this factory method to create a new instance of
          * this fragment using the provided parameters.

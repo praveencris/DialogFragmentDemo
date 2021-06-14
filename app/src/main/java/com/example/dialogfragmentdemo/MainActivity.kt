@@ -13,15 +13,9 @@ class MainActivity : AppCompatActivity(),DialogFragment.ClickListener {
 
 
         findViewById<Button>(R.id.showDialogButton).setOnClickListener {
-            val ft: FragmentTransaction = supportFragmentManager.beginTransaction()
-            val fragment = supportFragmentManager.findFragmentByTag("dialog")
-            if (fragment != null) {
-                ft.remove(fragment)
-            }
-            ft.addToBackStack(null)
             //Create and show the dialog
             val newFragment = DialogFragment.newInstance("FIRST TITLE", "FIRST SUBTITLE")
-            newFragment.show(ft, "dialog")
+            newFragment.show(supportFragmentManager, DialogFragment.TAG)
         }
     }
 
