@@ -1,8 +1,14 @@
 package com.example.dialogfragmentdemo
 
-import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.Button
+import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 
@@ -36,7 +42,7 @@ class DialogFragment : androidx.fragment.app.DialogFragment() {
         }
     }
 
-    /* override fun onCreateView(
+     override fun onCreateView(
          inflater: LayoutInflater, container: ViewGroup?,
          savedInstanceState: Bundle?
      ): View? {
@@ -68,9 +74,8 @@ class DialogFragment : androidx.fragment.app.DialogFragment() {
 
          return view
      }
- */
 
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+    /*override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return AlertDialog.Builder(requireContext())
             .setMessage("Are you sure, Yow wanted to make decision")
             .setPositiveButton(
@@ -79,7 +84,7 @@ class DialogFragment : androidx.fragment.app.DialogFragment() {
             .setNegativeButton(
                 "Cancel"
             ) { dialog, _ -> dialog.cancel() }.create()
-    }
+    }*/
 
     companion object {
         const val TAG = "DialogFragment"
